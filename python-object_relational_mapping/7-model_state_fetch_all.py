@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-""" a script that lists only first State object from the database hbtn_0e_6_usa
-"""
+""" a script that lists all State objects from the database hbtn_0e_6_usa """
 import sys
 from model_state import Base, State
 from sqlalchemy import create_engine, asc
@@ -14,10 +13,7 @@ def main(argv):
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
-    instance = session.query(State).first()
-    if instance is None:
-        print("Nothing")
-    else:
+    for instance in session.query(State).order_by(asc(State.id)):
         print(str(instance.id) + ': ' + instance.name)
     session.close()
 
